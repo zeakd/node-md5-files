@@ -18,13 +18,15 @@ export async function md5Files(filenames, options) {
   const platform = os.platform();
   debug('running on platform:', platform)
 
-  if (platform === 'darwin') {
-    return commandMD5(filenames, options)
-  }
-
-  if (platform === 'linux') {
-    return commandMD5Sum(filenames, options)
-  }
+  try {
+    if (platform === 'darwin') {
+      return await commandMD5(filenames, options)
+    }
+  
+    if (platform === 'linux') {
+      return await commandMD5Sum(filenames, options)
+    }
+  } catch {}
 
   debug('nothing is matched. run js fallback')
   return jsMd5(filenames, options)
@@ -39,6 +41,10 @@ export async function md5Files(filenames, options) {
  */
 export async function commandMD5(filenames, { cwd } = { cwd: process.cwd() }) {
   debug('execute commandMd5()')
+  if (filenames.length < 0) {
+    return {};
+  }
+
   const { stdout } = await $({ cwd })`md5 -q ${filenames}`;
   const hashes = stdout.split('\n');
   const result = {};
@@ -60,6 +66,10 @@ export async function commandMD5(filenames, { cwd } = { cwd: process.cwd() }) {
  */
 export async function commandMD5Sum(filenames, { cwd } = { cwd: process.cwd() }) {
   debug('execute commandMd5Sum()')
+  if (filenames.length < 0) {
+    return {};
+  }
+
   const { stdout } = await $({ cwd })`md5sum ${filenames}`;
 
   const hashes = stdout.split('\n').map(l => l.split(' ')[0]);
@@ -84,6 +94,10 @@ export async function commandMD5Sum(filenames, { cwd } = { cwd: process.cwd() })
  */
 export async function jsMd5(filenames, { cwd } = { cwd: process.cwd() }) {
   debug('execute jsMd5()')
+  if (filenames.length < 0) {
+    return {};
+  }
+
   const hashes = await Promise.all(filenames.map(filename => jsMd5One(filename, { cwd })));
   const result = {};
 
