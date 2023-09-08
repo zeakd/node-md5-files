@@ -29,7 +29,7 @@ it use built-in md5 commands for the `os.platfom()`
 
 - darwin: md5
 - linux: md5sum
-- win32: Get-FileHash
+- ~win32: Get-FileHash~ no window cli support. Get-Filehash or certutils are even slower than pure js logic
 - fallback: use nodejs `crypto` module
 
 #### filenames
@@ -42,3 +42,10 @@ your target files. glob is not supported, so feel free to use any glob library y
 
 Type: string[]
 Default: `process.cwd()`
+
+
+### commandMd5(filenames, options?)
+### commandMd5Sum(filenames, options?)
+### jsMd5(filenames, options?)
+
+you can choose creating command `md5`, `md5sum`, or pure nodejs.
