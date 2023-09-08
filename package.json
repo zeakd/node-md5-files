@@ -22,5 +22,15 @@
   "dependencies": {
     "debug": "^4.3.4",
     "execa": "^8.0.1"
-  }
+  },
+  "keywords": [
+    "md5",
+    "hash",
+    "file",
+    "files",
+    "folder",
+    "dir",
+    "checksum",
+    "md5sum"
+  ]
 }
