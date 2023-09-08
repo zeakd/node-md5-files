@@ -29,8 +29,8 @@ it use built-in md5 commands for the `os.platfom()`
 
 - darwin: md5
 - linux: md5sum
-- ~win32: Get-FileHash~ no window cli support. Get-Filehash or certutils are even slower than pure js logic
-- fallback: use nodejs `crypto` module
+- win32: ~Get-FileHash~ pure js (jsMd5). Get-Filehash or certutils are even slower than pure js logic
+- fallback: pure js (jsMd5)
 
 #### filenames
 
